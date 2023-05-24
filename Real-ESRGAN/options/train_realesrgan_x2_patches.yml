@@ -1,0 +1,157 @@
+# general settings
+name: train_RealESRGANx2_patches #name of assay, directory with results will be named like this
+model_type: RealESRGANModel  #architecture type - in this case the generator
+scale: 2 #scale of output compared to input dimensions
+num_gpu: auto  #auto can infer from your visible devices automatically. official 4 GPUs
+manual_seed: 0
+
+# ----------------- options for synthesizing training data in RealESRGANModel ----------------- #
+# USM the ground-truth
+l1_gt_usm: False
+percep_gt_usm: False
+gan_gt_usm: False
+
+high_order_degradation: False # do not use the high-order degradation generation process
+
+gt_size: 64 #size of subsampling done on data in training 
+queue_size: 512
+
+# dataset and data loader settings
+datasets:
+  train:
+    name: BP
+    type: RealESRGANPairedDataset
+    dataroot_gt: /PAT_GAN/datasets/breast_phantoms/train/
+    dataroot_lq: /PAT_GAN/datasets/breast_phantoms/train/
+    meta_info: /PAT_GAN/datasets/breast_phantoms/meta_info/metadata_train_patches.txt
+    io_backend:
+      type: disk
+
+    gt_size: 64
+    use_hflip: True
+    use_rot: True
+
+    # data loader
+    use_shuffle: true
+    num_worker_per_gpu: 16
+    batch_size_per_gpu: 32
+    dataset_enlarge_ratio: 1
+    prefetch_mode: ~
+
+  # Uncomment these for validation
+  val:
+    name: validation
+    type: RealESRGANPairedDataset #type of dataset 
+    dataroot_gt: /PAT_GAN/datasets/breast_phantoms/val/
+    dataroot_lq:  /PAT_GAN/datasets/breast_phantoms/val/
+    meta_info: /PAT_GAN/datasets/breast_phantoms/meta_info/metadata_val_patches.txt
+    io_backend:
+      type: disk
+
+# network structures
+network_g:
+  type: RRDBNet
+  num_in_ch: 1 #Channel number of inputs.
+  num_out_ch: 1 #Channel number of outputs.
+  num_feat: 40 #Channel number of intermediate features.
+  num_block: 16 #Block number in the trunk network.
+  num_grow_ch: 20 #Channels for each growth.
+  scale: 2 #Upsampling factor.
+
+network_d:
+  type: UNetDiscriminatorSN
+  num_in_ch: 1 #Channel number of inputs.
+  num_feat: 40 #Channel number of base intermediate features.
+  skip_connection: True #Whether to use skip connections between U-Net.
+
+# path
+path:
+  # use the pre-trained Real-ESRNet model
+  pretrain_network_g:  experiments/train_RealESRNetx2_patches/models/net_g_1000000.pth
+  param_key_g: params_ema
+  strict_load_g: true
+  resume_state: ~ # resume training from the latest checkpoint, path to checkpoint
+
+# training settings
+train:
+  ema_decay: 0.999
+  optim_g:
+    type: Adam
+    lr: !!float 1e-4
+    weight_decay: 0
+    betas: [0.9, 0.99]
+  optim_d:
+    type: Adam
+    lr: !!float 1e-4
+    weight_decay: 0
+    betas: [0.9, 0.99]
+
+  scheduler:
+    type: MultiStepLR
+    milestones: [200000]
+    gamma: 0.5
+
+  total_iter: 400000
+  warmup_iter: -1  # no warm up
+
+  # losses
+  pixel_opt:
+    type: L1Loss
+    loss_weight: 1.0
+    reduction: mean
+  # perceptual loss (content and style losses)
+  perceptual_opt:
+    type: PerceptualLoss
+    layer_weights:
+      # before relu
+      'conv1_2': 0.1
+      'conv2_2': 0.1
+      'conv3_4': 1
+      'conv4_4': 1
+      'conv5_4': 1
+    vgg_type: vgg19
+    use_input_norm: true
+    perceptual_weight: !!float 0.75
+    style_weight: !!float 0.25
+    range_norm: false
+    criterion: l1
+  # gan loss
+  gan_opt:
+    type: GANLoss
+    gan_type: vanilla # Support 'vanilla', 'lsgan', 'wgan', 'wgan_softplus', 'hinge'.
+    real_label_val: 1.0
+    fake_label_val: 0.0
+    loss_weight: !!float 1e-1
+
+  net_d_iters: 1
+  net_d_init_iters: 0
+
+# Uncomment these for validation
+# validation settings
+val:
+  val_freq: !!float 25e4
+  save_img: true
+
+  metrics:
+    psnr: # metric name
+      type: calculate_psnr
+      crop_border: 0
+      test_y_channel: false
+    ssim: # metric name
+      type: calculate_ssim
+      crop_border: 0
+      test_y_channel: false
+
+# logging settings
+logger:
+  print_freq: 500
+  save_checkpoint_freq: !!float 5e4
+  use_tb_logger: true
+  wandb:
+    project: ~
+    resume_id: ~
+
+# dist training settings
+dist_params:
+  backend: nccl
+  port: 29500
