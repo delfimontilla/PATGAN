@@ -1,3 +1,27 @@
+*.txt
+*.pkl
+*.csv
+*.doc
+*.docx
+*.png
+*.jpeg
+*.jpg
+*.tif
+*.tiff
+*.npy
+*.pdf
+*.mat
+*.asv
+*.dcm
+*.zip
+
+
+Real-ESRGAN/datasets/
+Real-ESRGAN/experiments/
+Real-ESRGAN/results/
+Real-ESRGAN/tb_logger
+results/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
