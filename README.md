@@ -58,7 +58,7 @@ Installation instructiones for Ubuntu at the end.
 
 The training has been divided into two stages:
 
-1. First pre-train the Real-ESRNet architecture with L1 loss.
+1. First pre-train the Real-ESRNet architecture with L1 and perceptual loss.
 
 
 
