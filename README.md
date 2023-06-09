@@ -7,7 +7,7 @@ The neural network used as benchmark is the U-Net implemented on [Deep Neural-Ne
 
 ## Prerequisites:
 
- - Python 3.8.10 or higher with specified packages in requirements.txt
+ - Python 3.8.10 or higher with specified packages in pyproject.toml.
 
 Optionally:
 
