@@ -171,11 +171,11 @@ And plot results changing the fname variable to the path correspoing to the resu
 
 Run the following command on the terminal to download and install poetry:
 
-  curl -sSL https://install.python-poetry.org | python3 -
+    curl -sSL https://install.python-poetry.org | python3 -
 
 In the ./bashrc file found at /home/, add the following line at the end:
   
-  export PATH="/home/$USER/.local/bin:$PATH"
+    export PATH="/home/$USER/.local/bin:$PATH"
 
 
 ### Pyenv installation 
