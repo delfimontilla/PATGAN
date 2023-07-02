@@ -1,8 +1,10 @@
 # Photoacoustic Tomography & GAN
 
-Super resolution, noise removal and BW enhancement for photoacoustic tomography sinograms using the [Real Enhanced Super Resolution GAN](https://github.com/xinntao/Real-ESRGAN) architecture and the training pipeline from [Basic Super Resolution](https://github.com/XPixelGroup/BasicSR). The original code was adapted to satisfy this project requirements.
+📖 Paper abstract - The goal of this work is to study a preprocessing method for the data measured by a two-dimensional optoacoustic tomograph in order to reduce or eliminate artifacts introduced by the low number of detectors in the experimental setup and their limited bandwidth. A generative adversarial deep neural network was used to accomplish this task and its performance was compared with a reference U-Net neural network. In most of the test cases carried out, a slight improvement was found by applying the proposed network when measuring the Pearson correlation and the peak signal noise ratio between the reconstructed image product of the data processed by the model and the high-resolution reference image. Keywords: optoacustic tomography; machine learning; GAN.
 
-The neural network used as benchmark is the U-Net implemented on [Deep Neural-Network Based Sinogram Super-resolution and Bandwidth Enhancement for Limited Data Photoacoustic Tomography](https://ieeexplore.ieee.org/document/9018129), [code](https://sites.google.com/site/sercmig/home/dnnpat) available.
+📖 [[Full article](http://elektron.fi.uba.ar/index.php/elektron/article/view/180)] 
+
+Super resolution, noise removal and BW enhancement for photoacoustic tomography sinograms using the [Real Enhanced Super Resolution GAN](https://github.com/xinntao/Real-ESRGAN) architecture and the training pipeline from [Basic Super Resolution](https://github.com/XPixelGroup/BasicSR). The original code was adapted to satisfy this project requirements. The neural network used as benchmark is the U-Net implemented on [Deep Neural-Network Based Sinogram Super-resolution and Bandwidth Enhancement for Limited Data Photoacoustic Tomography](https://ieeexplore.ieee.org/document/9018129), [code](https://sites.google.com/site/sercmig/home/dnnpat) available.
 
 
 ## Prerequisites:
