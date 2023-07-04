@@ -212,7 +212,7 @@ In project directory, activate the Python version and associated to the poetry e
 
 ## Citation 
 
-📖 If you find this repo or the paper useful in your research, please feel free to cite [[our paper: ](http://elektron.fi.uba.ar/index.php/elektron/article/view/180)] 
+📖 If you find this repo or the paper useful in your research, please feel free to cite [our paper: ](http://elektron.fi.uba.ar/index.php/elektron/article/view/180)
 
 
      @article{montilla2023red,
