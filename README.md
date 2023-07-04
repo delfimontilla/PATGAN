@@ -208,3 +208,19 @@ In project directory, activate the Python version and associated to the poetry e
 
 
 [Docker cheatsheet](https://dockerlabs.collabnix.com/docker/cheatsheet/)
+
+
+## Citation 
+
+📖 If you find this repo or the paper useful in your research, please feel free to cite [[our paper: ](http://elektron.fi.uba.ar/index.php/elektron/article/view/180)] 
+
+
+     @article{montilla2023red,
+       title={Red adversaria generativa aplicada a la eliminaci{\'o}n de ruido y artefactos en sinogramas de tomograf{\'\i}a optoac{\'u}stica},
+       author={Montilla, Delfina and Gonz{\'a}lez, Mart{\'\i}n German and Vega, Leonardo Rey},
+       journal={Elektron},
+       volume={7},
+       number={1},
+       pages={7--18},
+       year={2023}
+     }
